@@ -16,7 +16,7 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 	private int delay=8;
 	private int playerX=310;
 	private int ballposx=120;
-	private int ballposy=350;
+	private int ballposy=320;
 	private int ballXdir=-1;
 	private int ballYdir=-2;
 	
@@ -25,10 +25,12 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 	public gamePlay() {
 		map = new MapGenerator(3,7);
 		addKeyListener(this);
-		setFocusTraversalKeysEnabled(false);
-		requestFocusInWindow();
 		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
+		//requestFocusInWindow();
+		
 		time=new Timer(delay,this);
+		play=true;
 		time.start();
 	}
 	
@@ -57,7 +59,7 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 		//scores
 		g.setColor(Color.white);
 		g.setFont(new Font("serif",Font.BOLD,25));
-		g.drawString(""+score,590,30);
+		g.drawString(""+score,300,30);
 		
 		if(totalBricks<=0) {
 			play=false;
@@ -65,9 +67,9 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 			ballYdir=0;
 			g.setColor(Color.red);
 			g.setFont(new Font("serif",Font.BOLD,25));
-			g.drawString("YOu won",260,300);
+			g.drawString("You won",260,300);
 			g.setFont(new Font("serif",Font.BOLD,20));
-			g.drawString("Press Enter to restart ",230,350);
+			g.drawString("Press Enter to restart ",200,400);
 		}
 		
 		if(ballposy > 570) {
@@ -76,7 +78,7 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 			ballYdir=0;
 			g.setColor(Color.red);
 			g.setFont(new Font("serif",Font.BOLD,25));
-			g.drawString("Game over, Scores: ",190,300);
+			g.drawString("Game over, Scores: "+score,190,300);
 			g.setFont(new Font("serif",Font.BOLD,20));
 			g.drawString("Press Enter to restart ",230,350);
 		}
@@ -139,16 +141,16 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if(playerX >=600) {
-				playerX=600;
+			if(playerX >=getWidth()-100) {
+				playerX=getWidth()-100;
 			}
 			else {
 				moveRight();
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if(playerX <10) {
-				playerX=10;
+			if(playerX <=0) {
+				playerX=0;
 			}
 			else {
 				moveLeft();
@@ -158,7 +160,7 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 			if(!play) {
 				play=true;
 				ballposx=120;
-				ballposy=350;
+				ballposy=320;
 				ballXdir=-1;
 				ballYdir=-2;
 				playerX=310;
@@ -171,12 +173,12 @@ public class gamePlay extends JPanel implements KeyListener,ActionListener{
 	}
 	public void moveRight() {
 		play=true;
-		playerX +=20;
+		playerX +=30;
 		repaint();
 	}
 	public void moveLeft() {
 		play=true;
-		playerX -=20;
+		playerX -=30;
 		repaint();
 	}
 	
